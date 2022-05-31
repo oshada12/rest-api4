@@ -3,6 +3,7 @@ var express = require('express')
 var fetch = require('node-fetch')
 var cheerio = require('cheerio')
 var request = require('request')
+var axios = require('axios')
 var router  = express.Router()
 var creator = 'Creator Bot Akira'
 
@@ -11,7 +12,8 @@ var { TiktokDownloader } = require('../lib/tiktokdl.js')
 var {
 	Searchnabi,
 	NiatSholat,
-	Gempa
+	Gempa,
+	getBuffer
 } = require('./../lib');
 
 var {
@@ -375,6 +377,16 @@ router.get('/random/anime', async (req, res, next) => {
          .catch(e => {
          	res.json(loghandler.error)
 })
+})
+
+router.get('/random/loli', async(req, res, next) => {
+	var waif = (await axios.get(`https://raw.githubusercontent.com/KirBotz/tesdoan/master/KIR2/Loli.json`)).data
+	const result = waif[Math.floor(Math.random() * (waif.length))]
+	data = await getBuffer(result)
+    await fs.writeFileSync(__path +'/tmp/loli.png', data)
+    await res.sendFile(__path +'/tmp/loli.png')
+    await sleep(3000)
+    await fs.unlinkSync(__path + '/tmp/loli.png')
 })
 
 router.get('/random/neko', async (req, res, next) => {
