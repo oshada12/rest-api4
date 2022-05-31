@@ -378,14 +378,20 @@ router.get('/random/anime', async (req, res, next) => {
 })
 })
 
-router.get('/random/loli', async(req, res, next) => {
-	var waif = (await axios.get(`https://raw.githubusercontent.com/KirBotz/tesdoan/master/KIR2/Loli.json`)).data
-	const result = waif[Math.floor(Math.random() * (waif.length))]
-	data = await getBuffer(result)
-    await fs.writeFileSync(__path +'/tmp/loli.png', data)
-    await res.sendFile(__path +'/tmp/loli.png')
-    await sleep(3000)
-    await fs.unlinkSync(__path + '/tmp/loli.png')
+router.get('/random/loli', async (req, res, next) => {
+       fetch(encodeURI(`https://raw.githubusercontent.com/KirBotz/tesdoan/master/KIR2/Loli.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+        var result = data[Math.floor(Math.random() * data.length)];
+             res.json({
+             	author: 'Akira',
+                 result
+             })
+         })
+         .catch(e => {
+         	res.json(loghandler.error)
+})
 })
 
 router.get('/random/neko', async (req, res, next) => {
