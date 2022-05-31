@@ -7,13 +7,12 @@ var axios = require('axios')
 var router  = express.Router()
 var creator = 'Creator Bot Akira'
 
-var { fetchJson } = require(__path + '/lib/fetcher.js')
+var { fetchJson, getBuffer } = require(__path + '/lib/fetcher.js')
 var { TiktokDownloader } = require('../lib/tiktokdl.js')
 var {
 	Searchnabi,
 	NiatSholat,
-	Gempa,
-	getBuffer
+	Gempa
 } = require('./../lib');
 
 var {
