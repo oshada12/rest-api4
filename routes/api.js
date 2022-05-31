@@ -379,6 +379,9 @@ router.get('/random/anime', async (req, res, next) => {
 })
 
 router.get('/random/loli', async (req, res, next) => {
+        var apikeyInput = req.query.apikey
+	if(!apikeyInput) return res.json(loghandler.notparam)	
+	if (apikeyInput != 'KirBotz')  return res.json(loghandler.invalidKey)
        fetch(encodeURI(`https://raw.githubusercontent.com/KirBotz/tesdoan/master/KIR2/Loli.json`))
         .then(response => response.json())
         .then(data => {
